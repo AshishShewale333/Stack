@@ -1,0 +1,115 @@
+Remove All Adjacent Duplicates in String II
+Medium
+Marks Available: 20.00
+You are given a string s and an integer k, a k duplicate removal consists of choosing k adjacent and equal letters from s and removing them, causing the left and the right side of the deleted substring to concatenate together.
+
+We repeatedly make k duplicate removals on s until we no longer can.
+
+Return the final string after all such duplicate removals have been made. It is guaranteed that the answer is unique.
+
+Example 1:
+
+Input: s = "abcd", k = 2 
+Output: "abcd"
+Explanation: nothing to delete.
+Example 2:
+
+Input: s = "deeedbbcccbdaa", k = 3 
+Output: "aa"
+Explanation: First delete "eee" and "ccc", get "ddbbbdaa"
+
+Then delete "bbb", get "dddaa"
+
+
+Finally delete "ddd", get "aa"
+
+Example 3:
+
+Input: s = "pbbcggttciiippooaais", k = 2 
+Output: "ps"
+Explanation: 
+Constraints:
+
+1 <= s.length <= 
+10
+5
+10 
+5
+ 
+2 <= k <= 
+10
+4
+10 
+4
+ 
+s only contains lowercase English letters.
+
+
+✅ Java Code:
+java
+Copy
+Edit
+import java.util.Stack;
+
+class RemoveDuplicatesII {
+    public String removeDuplicates(String s, int k) {
+        Stack<Character> charStack = new Stack<>();
+        Stack<Integer> countStack = new Stack<>();
+
+        for (char ch : s.toCharArray()) {
+            if (!charStack.isEmpty() && charStack.peek() == ch) {
+                countStack.push(countStack.pop() + 1);
+            } else {
+                charStack.push(ch);
+                countStack.push(1);
+            }
+
+            if (countStack.peek() == k) {
+                charStack.pop();
+                countStack.pop();
+            }
+        }
+
+        // Reconstruct the final string
+        StringBuilder sb = new StringBuilder();
+        while (!charStack.isEmpty()) {
+            char ch = charStack.pop();
+            int count = countStack.pop();
+            sb.insert(0, String.valueOf(ch).repeat(count));
+        }
+
+        return sb.toString();
+    }
+
+    // Sample usage
+    public static void main(String[] args) {
+        RemoveDuplicatesII rd = new RemoveDuplicatesII();
+        System.out.println(rd.removeDuplicates("abcd", 2));           // Output: "abcd"
+        System.out.println(rd.removeDuplicates("deeedbbcccbdaa", 3)); // Output: "aa"
+        System.out.println(rd.removeDuplicates("pbbcggttciiippooaais", 2)); // Output: "ps"
+    }
+}
+💡 Explanation:
+Use two stacks:
+
+charStack stores characters.
+
+countStack tracks how many times that character has appeared consecutively.
+
+If a character repeats k times → pop it from both stacks (removal).
+
+At the end, rebuild the final string from the stacks.
+
+🧠 Example: "deeedbbcccbdaa", k = 3
+"eee" → removed → "ddbbcccbdaa"
+
+"ccc" → removed → "ddbbdaa"
+
+"bbb" → removed → "dddaa"
+
+"ddd" → removed → "aa"
+
+⏱ Time & Space Complexity:
+Time: O(n)
+
+Space: O(n) — for the stacks
