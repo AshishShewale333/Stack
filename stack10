@@ -80,3 +80,45 @@ class CustomStack {
         }
     }
 }
+
+
+✅ Explanation:
+Constructor CustomStack(int maxSize)
+
+Initializes the stack array and sets the max size.
+
+push(int x)
+
+Adds x to the stack only if current size is less than maxSize.
+
+pop()
+
+Returns the top element or -1 if the stack is empty.
+
+increment(int k, int val)
+
+Increments the bottom k elements of the stack by val.
+
+If k > current size, it only increments available elements.
+
+🔎 Example Test Code:
+java
+Copy
+Edit
+public class Main {
+    public static void main(String[] args) {
+        CustomStack customStack = new CustomStack(3);
+        customStack.push(1);
+        customStack.push(2);
+        System.out.println(customStack.pop()); // 2
+        customStack.push(2);
+        customStack.push(3);
+        customStack.push(4);                  // ignored
+        customStack.increment(5, 100);
+        customStack.increment(2, 100);
+        System.out.println(customStack.pop()); // 103
+        System.out.println(customStack.pop()); // 202
+        System.out.println(customStack.pop()); // 201
+        System.out.println(customStack.pop()); // -1
+    }
+}
