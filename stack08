@@ -1,0 +1,89 @@
+Reverse Polish Notation (RPN)
+Reverse Polish Notation (RPN), also known as Postfix Notation, is a mathematical notation in which every operator follows all of its operands. In RPN, arithmetic expressions are written without the need for parentheses to indicate the order of operations. This notation was developed to simplify the evaluation of expressions and is commonly used in computer science and calculators.
+
+In RPN, operators are written after the operands. For example, the infix expression 3 + 4 would be written in RPN as 3 4 +. This notation allows for unambiguous representation of arithmetic expressions and simplifies evaluation by eliminating the need for parentheses.
+
+How Reverse Polish Notation Works
+RPN eliminates the need for parentheses by explicitly specifying the order of operations through the position of the operators. To evaluate an RPN expression, we use a stack data structure.
+
+The evaluation process for RPN is as follows:
+
+Read the expression from left to right.
+If the current element is an operand (number), push it onto the stack.
+If the current element is an operator, pop the top two elements from the stack and perform the operation.
+Push the result of the operation back onto the stack.
+Repeat steps 2-4 until the entire expression is processed.
+The final result will be the only element remaining on the stack.
+
+
+import java.util.Stack;
+
+public class Main {
+    public static int evaluate(String[] tokens) {
+        Stack<Integer> stack = new Stack<>();
+
+        for (String token : tokens) {
+            if (isOperator(token)) {
+                int operand2 = stack.pop();
+                int operand1 = stack.pop();
+                int result = performOperation(token, operand1, operand2);
+                stack.push(result);
+            } else {
+                stack.push(Integer.parseInt(token));
+            }
+        }
+
+        return stack.pop();
+    }
+
+    private static boolean isOperator(String token) {
+        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
+    }
+
+    private static int performOperation(String operator, int operand1, int operand2) {
+        switch (operator) {
+            case "+":
+                return operand1 + operand2;
+            case "-":
+                return operand1 - operand2;
+            case "*":
+                return operand1 * operand2;
+            case "/":
+                return operand1 / operand2;
+        }
+        throw new IllegalArgumentException("Invalid operator");
+    }
+
+    public static void main(String[] args) {
+        String[] tokens = {"3", "4", "+"};
+        int result = evaluate(tokens);
+        System.out.println("Expression: " + String.join(" ", tokens));
+        System.out.println("Result: " + result);
+    }
+}
+
+
+Examples
+Let's see some examples to understand how Reverse Polish Notation works:
+
+Example 1
+Expression: "3 4 +" Result: 7
+
+In this example, we have the expression "3 4 +" in RPN. We evaluate it as follows:
+
+Push 3 onto the stack.
+Push 4 onto the stack.
+Pop 4 and 3 from the stack, perform the addition operation, and push the result (7) back onto the stack.
+The final result is 7.
+Example 2
+Expression: "5 2 * 3 +" Result: 13
+
+In this example, we have the expression "5 2 * 3 +" in RPN. We evaluate it as follows:
+
+Push 5 onto the stack.
+Push 2 onto the stack.
+Pop 2 and 5 from the stack, perform the multiplication operation, and push the result (10) back onto the stack.
+Push 3 onto the stack.
+Pop 3 and 10 from the stack, perform the addition operation, and push the result (13) back onto the stack.
+The final result is 13.
+By using Reverse Polish Notation, we can evaluate arithmetic expressions efficiently and eliminate the need for parentheses to indicate the order of operations. It simplifies the evaluation process and allows for unambiguous representation of expressions. The examples provided demonstrate the step-by-step evaluation of RPN expressions using different programming languages.
