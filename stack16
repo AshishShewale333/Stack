@@ -1,0 +1,122 @@
+Decode String
+Medium
+Marks Available: 20.00
+Given an encoded string, return its decoded string.
+
+The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
+
+You may assume that the input string is always valid; there are no extra white spaces, square brackets are well-formed, etc. Furthermore, you may assume that the original data does not contain any digits and that digits are only for those repeat numbers, k. For example, there will not be input like 3a or 2[4].
+
+The test cases are generated so that the length of the output will never exceed 
+10
+5
+10 
+5
+ .
+
+Example 1:
+
+Input: s = "3[a]2[bc]" 
+Output: "aaabcbc"
+Explanation: 
+Example 2:
+
+Input: s = "3[a2[c]]" 
+Output: "accaccacc"
+Explanation: 
+Example 3:
+
+Input: s = "2[abc]3[cd]ef" 
+Output: "abcabccdcdcdef"
+Explanation: 
+Constraints:
+
+1 <= s.length <= 30
+s consists of lowercase English letters, digits, and square brackets '[]'.
+s is guaranteed to be a valid input.
+All the integers in s are in the range [1, 300].
+
+
+
+✅ Java Code:
+java
+Copy
+Edit
+import java.util.Stack;
+
+class DecodeString {
+    public String decodeString(String s) {
+        Stack<Integer> countStack = new Stack<>();
+        Stack<StringBuilder> stringStack = new Stack<>();
+        StringBuilder current = new StringBuilder();
+        int k = 0;
+
+        for (char ch : s.toCharArray()) {
+            if (Character.isDigit(ch)) {
+                k = k * 10 + (ch - '0'); // Build multi-digit numbers
+            } else if (ch == '[') {
+                countStack.push(k);
+                stringStack.push(current);
+                current = new StringBuilder();
+                k = 0;
+            } else if (ch == ']') {
+                int repeatTimes = countStack.pop();
+                StringBuilder decoded = stringStack.pop();
+                for (int i = 0; i < repeatTimes; i++) {
+                    decoded.append(current);
+                }
+                current = decoded;
+            } else {
+                current.append(ch); // Regular character
+            }
+        }
+
+        return current.toString();
+    }
+
+    // Example usage
+    public static void main(String[] args) {
+        DecodeString ds = new DecodeString();
+        System.out.println(ds.decodeString("3[a]2[bc]"));      // aaabcbc
+        System.out.println(ds.decodeString("3[a2[c]]"));       // accaccacc
+        System.out.println(ds.decodeString("2[abc]3[cd]ef"));  // abcabccdcdcdef
+    }
+}
+💡 Explanation:
+Stacks used:
+
+countStack stores repeat counts (k values).
+
+stringStack stores intermediate strings before entering a new bracketed section.
+
+Workflow:
+
+Digits build the repeat count k.
+
+[ pushes the current state to stacks.
+
+] pops and builds the decoded segment.
+
+Characters are appended directly to the current string.
+
+🧠 Example Trace for "3[a2[c]]":
+Encounter 3 → store k = 3
+
+[ → push 3 and ""
+
+a → current = "a"
+
+2 → store k = 2
+
+[ → push 2 and "a"
+
+c → current = "c"
+
+] → pop 2 and "a" → current becomes "a" + "c" + "c" → "acc"
+
+] → pop 3 and "" → current becomes "acc" * 3 → "accaccacc"
+
+⏱ Time and Space Complexity:
+Time: O(n), where n is the length of the input.
+
+Space: O(n), due to stacks and string building.
