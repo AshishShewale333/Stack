@@ -1,0 +1,98 @@
+Infix Arithmetic Expressions to Reverse Polish Notation (RPN)
+Reverse Polish Notation (RPN), also known as Postfix Notation, is a mathematical notation where every operator follows all of its operands. Converting an arithmetic expression from infix notation to RPN allows for easier evaluation and simplifies the process of performing mathematical operations.
+
+Steps to Convert Infix to RPN
+To convert an infix arithmetic expression to RPN, we can use the following algorithm:
+
+Create an empty stack to store operators.
+Initialize an empty list to store the output in RPN.
+Read the expression from left to right.
+If the current token is an operand, append it to the output list.
+If the current token is an operator, pop operators from the stack and append them to the output list until an operator with lower precedence or a parenthesis is encountered. Then push the current operator onto the stack.
+If the current token is an opening parenthesis '(', push it onto the stack.
+If the current token is a closing parenthesis ')', pop operators from the stack and append them to the output list until an opening parenthesis is encountered. Discard the opening parenthesis.
+Repeat steps 4-7 until all tokens have been read.
+Pop any remaining operators from the stack and append them to the output list.
+The final output list represents the input expression converted to RPN.
+Example: Converting Infix to RPN
+Let's consider the infix expression "3 + 4 * 2 / (1 - 5)^2".
+
+Start with an empty stack and an empty output list.
+Read the expression from left to right:
+Token: 3 (operand), append to output list: [3]
+Token: + (operator), stack is empty, push onto stack: [+]
+Token: 4 (operand), append to output list: [3, 4]
+Token: * (operator), stack is empty, push onto stack: [+, *]
+Token: 2 (operand), append to output list: [3, 4, 2]
+Token: / (operator), stack is empty, push onto stack: [+, *, /]
+Token: ( (opening parenthesis), push onto stack: [+, *, /, (]
+Token: 1 (operand), append to output list: [3, 4, 2, 1]
+Token: - (operator), stack top precedence is (, push onto stack: [+, *, /, (, -]
+Token: 5 (operand), append to output list: [3, 4, 2, 1, 5]
+Token: ) (closing parenthesis), pop operators until ( is encountered, discard (: [3, 4, 2, 1, 5, -]
+Token: ^ (operator), stack is empty, push onto stack: [+, *, /, ^]
+Token: 2 (operand), append to output list: [3, 4, 2, 1, 5, -, 2]
+Pop any remaining operators from the stack and append them to the output list: [3, 4, 2, 1, 5, -, 2, ^, /, *, +]
+The final output list is the RPN representation: [3, 4, 2, 1, 5, -, 2, ^, /, *, +]
+Implementation Examples
+Let's see how we can implement the conversion from infix to RPN in different programming languages:
+
+
+import java.util.*;
+
+public class Main {
+    private static final Map<Character, Integer> precedence = new HashMap<>();
+
+    static {
+        precedence.put('+', 1);
+        precedence.put('-', 1);
+        precedence.put('*', 2);
+        precedence.put('/', 2);
+        precedence.put('^', 3);
+    }
+
+    public static List<String> convertToRPN(String infix) {
+        List<String> rpn = new ArrayList<>();
+        Deque<Character> stack = new ArrayDeque<>();
+
+        for (char token : infix.toCharArray()) {
+            if (token ==  ' ') {
+                //ignore white space
+            } else if (Character.isDigit(token)) {
+                rpn.add(String.valueOf(token));
+            } else if (token == '(') {
+                stack.push(token);
+            } else if (token == ')') {
+                while (!stack.isEmpty() && stack.peek() != '(') {
+                    rpn.add(String.valueOf(stack.pop()));
+                }
+                stack.pop(); // Discard the opening parenthesis
+            } else {
+                while (!stack.isEmpty() && stack.peek() != '(' && precedence.containsKey(stack.peek()) && precedence.get(stack.peek()) >= precedence.get(token)) {
+                    rpn.add(String.valueOf(stack.pop()));
+                }
+                stack.push(token);
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            rpn.add(String.valueOf(stack.pop()));
+        }
+
+        return rpn;
+    }
+
+    public static void main(String[] args) {
+        String infix = "3 + 4 * 2 / (1 - 5)^2";
+        List<String> rpn = convertToRPN(infix);
+        System.out.println("Infix Expression: " + infix);
+        System.out.println("RPN Expression: " + String.join(" ", rpn));
+    }
+}
+
+
+
+Conclusion
+RPN provides a more straightforward and unambiguous way to represent arithmetic expressions, eliminating the need for parentheses to indicate the order of operations. It is particularly useful for evaluating mathematical expressions, implementing calculators, and designing parsing algorithms.
+
+Understanding RPN and its conversion algorithms is essential for students studying data structures and algorithms, as it can enhance their problem-solving skills and expand their understanding of different mathematical notations.
