@@ -1,0 +1,84 @@
+Implementing a Stack using Linked List
+In this article, we will explore the implementation of a stack using a linked list. A linked list is a dynamic data structure that consists of nodes connected through pointers, allowing efficient insertion and removal of elements. Implementing a stack using a linked list provides flexibility in terms of size and does not require a fixed capacity like an array-based implementation.
+
+Linked List-Based Stack Implementation
+To implement a stack using a linked list, we need to define the necessary operations and maintain the top of the stack. Here are the essential components of a linked list-based stack implementation:
+
+Node: Each node in the linked list represents an element in the stack. It contains a value and a reference to the next node.
+Top: The top variable represents the topmost node in the stack. It keeps track of the last inserted element, enabling quick access and insertion.
+With these components in place, we can implement the following operations for the stack:
+
+1. Push: Inserting an element into the stack
+The push operation adds an element to the top of the stack. It involves two main steps:
+
+Create a new node with the given value.
+Set the next reference of the new node to the current top node, and update the top to point to the new node.
+2. Pop: Removing the top element from the stack
+The pop operation removes the top element from the stack. It involves the following steps:
+
+Check if the stack is empty (i.e., top is null).
+If the stack is not empty, update the top to point to the next node and return the value of the removed node.
+
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedListStack {
+    private Node top;
+
+    public void push(int value) {
+        Node newNode = new Node(value);
+        newNode.next = top;
+        top = newNode;
+    }
+
+    public int pop() {
+        if (isEmpty()) {
+            System.out.println("Stack underflow!");
+            return -1;
+        }
+        int value = top.data;
+        top = top.next;
+        return value;
+    }
+
+    public boolean isEmpty() {
+        return top == null;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        LinkedListStack stack = new LinkedListStack();
+
+        // Push elements onto the stack
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        stack.push(5);
+
+        // Pop elements from the stack
+        System.out.println(stack.pop()); // Output: 5
+        System.out.println(stack.pop()); // Output: 4
+
+        // Check if the stack is empty
+        System.out.println(stack.isEmpty()); // Output: false
+
+        // Push more elements
+        stack.push(6);
+        stack.push(7);
+
+        // Pop elements until the stack is empty
+        while (!stack.isEmpty()) {
+            System.out.println(stack.pop());
+        }
+    }
+}
