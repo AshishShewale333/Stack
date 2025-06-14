@@ -1,0 +1,82 @@
+Reverse Integer
+Medium
+Marks Available: 20.00
+Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.
+
+Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
+
+ 
+
+Example 1:
+
+Input: x = 123
+Output: 321
+Example 2:
+
+Input: x = -123
+Output: -321
+Example 3:
+
+Input: x = 120
+Output: 21
+ 
+
+Constraints:
+
+-231 <= x <= 231 - 1
+
+
+
+✅ Java Code:
+java
+Copy
+Edit
+class ReverseInteger {
+    public int reverse(int x) {
+        int rev = 0;
+
+        while (x != 0) {
+            int digit = x % 10;
+            x /= 10;
+
+            // Check for overflow before multiplying/re-adding
+            if (rev > Integer.MAX_VALUE / 10 || (rev == Integer.MAX_VALUE / 10 && digit > 7)) return 0;
+            if (rev < Integer.MIN_VALUE / 10 || (rev == Integer.MIN_VALUE / 10 && digit < -8)) return 0;
+
+            rev = rev * 10 + digit;
+        }
+
+        return rev;
+    }
+
+    // Sample usage
+    public static void main(String[] args) {
+        ReverseInteger ri = new ReverseInteger();
+        System.out.println(ri.reverse(123));    // Output: 321
+        System.out.println(ri.reverse(-123));   // Output: -321
+        System.out.println(ri.reverse(120));    // Output: 21
+        System.out.println(ri.reverse(0));      // Output: 0
+        System.out.println(ri.reverse(1534236469)); // Output: 0 (overflow)
+    }
+}
+💡 Why This Works:
+We reverse the number digit by digit.
+
+Before updating the result (rev = rev * 10 + digit), we check if the new value would overflow.
+
+This is done by comparing against Integer.MAX_VALUE / 10 (which is 214748364) and the last digit (7 for positive, -8 for negative).
+
+🔒 Overflow Example:
+Input: x = 1534236469
+
+Reversed = 9646324351 → exceeds Integer.MAX_VALUE = 2147483647
+
+So the function returns 0.
+
+⏱ Time & Space Complexity:
+Time: O(log₁₀(n)) — Processes each digit.
+
+Space: O(1) — Uses constant extra space.
+
+
+
