@@ -1,0 +1,92 @@
+Valid Parentheses
+Easy
+Marks Available: 20.00
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Every close bracket has a corresponding open bracket of the same type.
+ 
+
+Example 1:
+
+Input: s = "()"
+Output: true
+Example 2:
+
+Input: s = "()[]{}"
+Output: true
+Example 3:
+
+Input: s = "(]"
+Output: false
+ 
+
+Constraints:
+
+1 <= s.length <= 104
+s consists of parentheses only '()[]{}'.
+
+
+
+✅ Java Code:
+java
+Copy
+Edit
+import java.util.Stack;
+
+public class ValidParentheses {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+
+        for (char ch : s.toCharArray()) {
+            // Push corresponding closing brackets for each opening bracket
+            if (ch == '(') {
+                stack.push(')');
+            } else if (ch == '{') {
+                stack.push('}');
+            } else if (ch == '[') {
+                stack.push(']');
+            } else {
+                // If it's a closing bracket, check for mismatch or empty stack
+                if (stack.isEmpty() || stack.pop() != ch) {
+                    return false;
+                }
+            }
+        }
+
+        // If stack is empty at the end, all brackets matched
+        return stack.isEmpty();
+    }
+
+    // Sample usage
+    public static void main(String[] args) {
+        ValidParentheses vp = new ValidParentheses();
+        System.out.println(vp.isValid("()"));        // true
+        System.out.println(vp.isValid("()[]{}"));    // true
+        System.out.println(vp.isValid("(]"));        // false
+        System.out.println(vp.isValid("([)]"));      // false
+        System.out.println(vp.isValid("{[]}"));      // true
+    }
+}
+💡 How It Works:
+It uses a stack to keep track of expected closing brackets.
+
+Every time it encounters an opening bracket (, {, or [, it pushes the corresponding closing bracket onto the stack.
+
+When it encounters a closing bracket, it checks if the stack is empty or the top element of the stack does not match—if either is true, the string is invalid.
+
+At the end, if the stack is empty, all brackets were correctly matched and closed.
+
+🧠 Time and Space Complexity:
+Time Complexity: O(n), where n is the length of the string.
+
+Space Complexity: O(n), for storing characters in the stack in the worst case.
+
+Let me know if you want a version that avoids using Java’s built-in Stack class.
+
+
+
+
