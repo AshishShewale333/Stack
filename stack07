@@ -1,0 +1,69 @@
+Polish Notation
+Polish Notation, also known as Prefix Notation, is a mathematical notation where operators are placed before their operands. In Polish Notation, arithmetic expressions are written in a way that eliminates the need for parentheses to indicate the order of operations. This notation was developed by the Polish mathematician Jan Lukasiewicz in the 1920s and is widely used in computer science and mathematics.
+
+In Polish Notation, the operator is followed by its operands. For example, the infix expression 3 + 4 would be written in Polish Notation as + 3 4. This notation allows for unambiguous representation of arithmetic expressions and simplifies evaluation.
+
+How Polish Notation Works
+Polish Notation eliminates the need for parentheses by explicitly specifying the order of operations through the position of the operators. To evaluate a Polish Notation expression, we use a stack data structure.
+
+The evaluation process for Polish Notation is as follows:
+
+Read the expression from left to right.
+If the current element is an operand (number), push it onto the stack.
+If the current element is an operator, pop the top two elements from the stack and perform the operation.
+Push the result of the operation back onto the stack.
+Repeat steps 2-4 until the entire expression is processed.
+The final result will be the only element remaining on the stack.
+
+import java.util.Stack;
+
+public class Main {
+    public static int evaluate(String expression) {
+        Stack<Integer> stack = new Stack<>();
+
+        String[] tokens = expression.split("\\s+");
+        for (int i = tokens.length - 1; i >= 0; i--) {
+            String token = tokens[i];
+            if (isOperator(token)) {
+                int operand1 = stack.pop();
+                int operand2 = stack.pop();
+                int result = performOperation(token, operand1, operand2);
+                stack.push(result);
+            } else {
+                stack.push(Integer.parseInt(token));
+            }
+        }
+
+        return stack.pop();
+    }
+
+    private static boolean isOperator(String token) {
+        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
+    }
+
+    private static int performOperation(String operator, int operand1, int operand2) {
+        switch (operator) {
+            case "+":
+                return operand1 + operand2;
+            case "-":
+                return operand1 - operand2;
+            case "*":
+                return operand1 * operand2;
+            case "/":
+                return operand1 / operand2;
+        }
+        throw new IllegalArgumentException("Invalid operator");
+    }
+
+    public static void main(String[] args) {
+        String expression = "+ * 3 4 5";
+        int result = evaluate(expression);
+        System.out.println("Expression: " + expression);
+        System.out.println("Result: " + result);
+    }
+}
+
+
+
+Conclusion
+Polish Notation, also known as Prefix Notation, provides a clear and unambiguous representation of arithmetic expressions. By placing operators before operands, Polish Notation eliminates the need for parentheses and provides a systematic way to evaluate expressions. The conversion of infix to Polish Notation and the subsequent evaluation using a stack data structure allows for efficient arithmetic expression processing. Implementing the evaluation algorithm in different programming languages enables us to handle arithmetic expressions effectively and solve various algorithmic problems related to expressions.
