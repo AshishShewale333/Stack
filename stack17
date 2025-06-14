@@ -1,0 +1,96 @@
+Remove All Adjacent Duplicates In String
+Easy
+Marks Available: 20.00
+You are given a string s consisting of lowercase English letters. A duplicate removal consists of choosing two adjacent and equal letters and removing them.
+
+We repeatedly make duplicate removals on s until we no longer can.
+
+Return the final string after all such duplicate removals have been made. It can be proven that the answer is unique.
+
+Example 1:
+
+Input: s = "abbaca" 
+Output: "ca"
+Explanation: For example, in "abbaca" we could remove "bb" since the letters are adjacent and equal, and this is the only possible move.  The result of this move is that the string is "aaca", of which only "aa" is possible, so the final string is "ca".
+Example 2:
+
+Input: s = "azxxzy" 
+Output: "ay"
+Explanation: 
+Constraints:
+
+1 <= s.length <= 
+10
+5
+10 
+5
+ 
+s consists of lowercase English letters.
+
+✅ Java Code:
+java
+Copy
+Edit
+import java.util.Stack;
+
+class RemoveDuplicates {
+    public String removeDuplicates(String s) {
+        Stack<Character> stack = new Stack<>();
+
+        for (char ch : s.toCharArray()) {
+            if (!stack.isEmpty() && stack.peek() == ch) {
+                stack.pop(); // Remove duplicate
+            } else {
+                stack.push(ch); // Add non-duplicate
+            }
+        }
+
+        // Build the final result from the stack
+        StringBuilder result = new StringBuilder();
+        for (char ch : stack) {
+            result.append(ch);
+        }
+
+        return result.toString();
+    }
+
+    // Sample usage
+    public static void main(String[] args) {
+        RemoveDuplicates rd = new RemoveDuplicates();
+        System.out.println(rd.removeDuplicates("abbaca")); // Output: "ca"
+        System.out.println(rd.removeDuplicates("azxxzy")); // Output: "ay"
+    }
+}
+💡 Explanation:
+Use a stack to simulate the removal of adjacent duplicates.
+
+For each character:
+
+If it's the same as the top of the stack → pop (remove duplicate).
+
+Otherwise → push to stack.
+
+At the end, reconstruct the string from the characters left in the stack.
+
+🧠 Example:
+Input: "abbaca"
+Steps:
+
+Push 'a' → Stack: [a]
+
+'b' → [a, b]
+
+'b' (duplicate) → Pop 'b' → [a]
+
+'a' (duplicate) → Pop 'a' → []
+
+'c' → [c]
+
+'a' → [c, a]
+
+Result: "ca"
+
+⏱ Time and Space Complexity:
+Time: O(n)
+
+Space: O(n) (worst case, no duplicates)
