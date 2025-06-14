@@ -1,0 +1,76 @@
+Monotonic Stack
+Monotonic stack is a data structure used in algorithms and data processing to solve problems related to finding the next greater or smaller element in an array. It is based on the stack data structure but with a special property that the elements in the stack are either strictly increasing or strictly decreasing.
+
+The monotonic stack can be used to efficiently solve a variety of problems, including finding the next greater element, next smaller element, and finding the nearest smaller or greater element on the left or right side of each element in an array.
+
+How Monotonic Stack Works
+The main idea behind the monotonic stack is to maintain a stack of elements that are either increasing or decreasing. The elements in the stack represent a subset of the original array, and they are arranged in a way that makes it easy to find the next greater or smaller element.
+
+When processing each element in the array, we compare it with the elements in the stack. If the current element is greater (or smaller) than the top element of the stack, we have found the next greater (or smaller) element for the top element of the stack. We can pop the top element from the stack and continue this process until the current element is not greater (or smaller) than the top element.
+
+By maintaining the monotonic property of the stack, we ensure that the elements in the stack are always in the desired order, making it easy to find the next greater or smaller element efficiently.
+
+Algorithm
+The algorithm for using a monotonic stack to find the next greater element can be summarised as follows:
+
+Create an empty stack to store the indices of elements.
+Iterate through the array from left to right.
+For each element, compare it with the elements represented by the indices in the stack:
+If the current element is greater than the element at the top of the stack, we have found the next greater element for the element at the top of the stack. Pop the stack and record the next greater element at the corresponding index.
+If the current element is not greater than the element at the top of the stack, push its index into the stack.
+After processing all the elements, if there are any remaining indices in the stack, it means there is no next greater element for those elements.
+The algorithm for finding the next smaller element is similar, but with the comparison reversed.
+
+
+import java.util.*;
+
+class MonotonicStack {
+    public int[] nextGreaterElement(int[] nums) {
+        int n = nums.length;
+        int[] result = new int[n];
+        Arrays.fill(result, -1);
+
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && nums[i] > nums[stack.peek()]) {
+                result[stack.pop()] = nums[i];
+            }
+            stack.push(i);
+        }
+
+        return result;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        MonotonicStack monotonicStack = new MonotonicStack();
+
+        int[] nums = {3, 1, 4, 2, 5};
+        int[] result = monotonicStack.nextGreaterElement(nums);
+
+        System.out.println("Input: " + Arrays.toString(nums));
+        System.out.println("Next Greater Elements: " + Arrays.toString(result));
+    }
+}
+
+
+
+Recognize It
+Problems that can be solved using a monotonic stack typically have the following properties:
+
+The problem involves finding the nearest smaller or greater element to the left or right of a given element in an array.
+The problem requires constant time access to the nearest smaller or greater element.
+The problem can be solved by maintaining a non-increasing or non-decreasing order of elements in a stack.
+Examples of problems that can be solved using a monotonic stack include:
+
+Finding the nearest smaller element to the left or right of each element in an array.
+Finding the nearest greater element to the left or right of each element in an array.
+Finding the maximum area of a histogram.
+
+Sample Problems
+Next Greater Element I(https://leetcode.com/problems/next-greater-element-i/description/)
+Remove K Digits(https://leetcode.com/problems/remove-k-digits/description/)
+Next Greater Element II(https://leetcode.com/problems/next-greater-element-ii/description/)
+Daily Temperature(https://leetcode.com/problems/daily-temperatures/description/)
+Othe LeetCode Monotoinc Stack Problems(https://leetcode.com/problem-list/monotonic-stack/)
+
