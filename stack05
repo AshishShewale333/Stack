@@ -1,0 +1,80 @@
+Two-Stack Technique in Data Structures and Algorithms
+The Two-Stack technique is a popular approach used in data structures and algorithms to solve a variety of problems efficiently. It involves the use of two stacks to perform operations or store data in a specific manner. In this article, we will explore the concept of the Two-Stack technique, discuss its applications, and provide example code in Java, C++, Python, and JavaScript.
+
+Introduction to the Two-Stack Technique
+The Two-Stack technique involves the use of two stacks, typically referred to as the "main stack" and the "auxiliary stack." Each stack has its own specific purpose and aids in achieving efficient solutions for various problems.
+
+The main stack is used to perform regular operations such as push and pop. It stores the primary data and handles the main functionality of the algorithm or problem being solved.
+
+The auxiliary stack is used to assist the main stack in performing specific operations or storing additional information. It can hold temporary data, track specific values, or help with specific calculations required by the algorithm.
+
+By utilizing two stacks and dividing the tasks between them, we can optimize the time and space complexity of certain algorithms or efficiently solve problems that require specific operations.
+
+Applications of the Two-Stack Technique
+Expression Evaluation
+One of the main applications of the Two-Stack technique is in evaluating arithmetic expressions, particularly infix expressions. Infix expressions are written in the traditional mathematical notation where operators are placed between operands. The technique involves converting an infix expression to postfix notation and then evaluating it using the stacks.
+
+The main stack is used to store operators and operands while processing the expression. The auxiliary stack is used to hold operators temporarily and maintain their precedence during the conversion process.
+
+Parentheses Matching
+Another common application is checking the validity of parentheses in an expression. This is often referred to as parentheses matching or balanced parentheses checking. The Two-Stack technique is used to keep track of opening and closing parentheses while traversing the expression. If the stack is empty at the end of the expression, it indicates that all parentheses are balanced.
+
+Reverse Polish Notation (RPN) Evaluation
+Reverse Polish Notation (RPN) is a mathematical notation in which operators are placed after their operands. The Two-Stack technique is used to evaluate RPN expressions efficiently. The main stack is used to store operands, and the auxiliary stack is used to perform operations by popping operands from the main stack.
+
+Stock Span Problem
+The Two-Stack technique can also be used to solve the stock span problem. The problem involves calculating the span of stock prices for a given number of days. The span of a stock on a particular day is defined as the maximum number of consecutive days (including the current day) for which the stock price is less than or equal to the price on the current day.
+
+The main stack is used to store stock prices, and the auxiliary stack is used to store the corresponding span values. The technique allows for efficient calculation of stock spans using the concept of a monotonically decreasing stack.
+
+
+
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) {
+        // Example implementation of the Two-Stack technique
+        Stack<Integer> mainStack = new Stack<>();
+        Stack<Integer> auxiliaryStack = new Stack<>();
+
+        // Push elements to the main stack
+        mainStack.push(5);
+        mainStack.push(2);
+        mainStack.push(8);
+        mainStack.push(1);
+
+        // Perform operations using the two stacks
+        while (!mainStack.isEmpty()) {
+            int element = mainStack.pop();
+            auxiliaryStack.push(element * 2);
+        }
+
+        // Print the results
+        System.out.println("Elements in auxiliary stack:");
+        while (!auxiliaryStack.isEmpty()) {
+            System.out.println(auxiliaryStack.pop());
+        }
+    }
+}
+
+
+
+
+In this example, we create two empty lists main_stack and auxiliary_stack to represent the main stack and auxiliary stack, respectively. We then push some elements to the main stack using the append() function. Next, we perform operations using the two stacks. In this case, we multiply each element in the main stack by 2 and push the result to the auxiliary stack. Finally, we print the elements in the auxiliary stack by popping and displaying them one by one.
+
+Identifying the Two-Stack Problem Pattern
+The Two-Stack problem pattern can be identified by certain characteristics in the problem statement or the required operations. Here are some key indications that suggest the use of the Two-Stack technique:
+
+Reverse Order: When you need to reverse the order of elements or perform operations in the reverse order from the input, the Two-Stack technique can be helpful. The auxiliary stack can be used to store the elements in reverse order while processing the main stack.
+Nested Structure: If the problem involves a nested structure or nested elements, such as nested parentheses, expressions, or hierarchical data, the Two-Stack technique can simplify the processing of such structures.
+Inversion or Reversal: When you need to perform inversion or reversal operations on the elements or substructures, the Two-Stack technique can be employed to achieve the desired result efficiently.
+Temporary Storage: If the problem requires temporary storage of elements or intermediate results during the execution of an algorithm, the Two-Stack technique can provide a convenient way to store and retrieve the necessary data.
+Recognize it
+look for problems that involve arithmetic expressions, such as infix, postfix, or prefix expressions.
+Problems that involve evaluating an expression, converting an infix expression to a postfix or prefix expression, or evaluating a postfix or prefix expression can all be solved using the Two Stack Technique.
+Identifying these patterns can give you a hint that the Two-Stack technique might be applicable to solve the problem at hand. However, it's important to analyze the problem thoroughly and consider other factors before deciding to use this technique.
+
+
+https://leetcode.com/problems/valid-parentheses/description/
+https://leetcode.com/problems/min-stack/description/
+https://leetcode.com/problems/decode-string/description/
