@@ -1,0 +1,57 @@
+Using Stack in Recursion
+Recursion is a powerful technique used in computer programming to solve complex problems by breaking them down into smaller, more manageable subproblems. However, recursive functions can consume a significant amount of memory, especially when dealing with large inputs or deep recursion levels. One way to mitigate this issue is to use an explicit stack data structure to mimic the call stack of recursive function calls.
+
+The Call Stack in Recursion
+Before delving into using a stack in recursion, it is important to understand the concept of the call stack. When a function is called, a new frame is added to the call stack to keep track of the function's local variables, parameters, and return address. As the function executes, it may call other functions, and each new function call adds another frame to the stack. When a function completes its execution, its frame is removed from the stack, and control returns to the caller function.
+
+Recursive Functions and Memory Consumption
+Recursive functions are natural candidates for solving problems that exhibit a recursive structure. However, recursive functions can consume a large amount of memory when the recursion depth becomes significant. Each recursive function call adds a new frame to the call stack, and if the recursion depth is too deep, the stack may overflow, causing a stack overflow error.
+
+Using a Stack to Mimic the Call Stack
+To avoid the memory consumption associated with deep recursion, we can use an explicit stack data structure to mimic the behavior of the call stack. Instead of relying on the system's call stack, we maintain our own stack and explicitly manage the function calls and their associated data. This approach is known as using a stack in recursion or simulating recursion with a stack.
+
+Example: Recursive Function to Find Factorial
+Let's consider the example of calculating the factorial of a number using recursion. The factorial of a non-negative integer n is the product of all positive integers less than or equal to n. Here is the recursive function to find the factorial:
+
+def factorial(n):
+    if n == 0:
+        return 1
+    return n * factorial(n - 1)
+This recursive function calculates the factorial by multiplying the number n with the factorial of n-1. However, if we call this function with a large value of n, it can cause a stack overflow error due to the recursive calls.
+
+Using a Stack to Calculate Factorial
+To mitigate the memory consumption issue, we can rewrite the factorial function using an explicit stack. Instead of making recursive function calls, we push the parameters and intermediate results onto a stack and iterate until the stack is empty. Here is the modified factorial function using a stack:
+
+
+import java.util.Stack;
+
+public class Main {
+    public static int factorial(int n) {
+        Stack<Integer> stack = new Stack<>();
+        int result = 1;
+
+        while (n > 0) {
+            stack.push(n);
+            n--;
+        }
+
+        while (!stack.isEmpty()) {
+            result *= stack.pop();
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int n = 5;
+        int factorial = factorial(n);
+        System.out.println("Factorial of " + n + " is: " + factorial);
+    }
+}
+
+
+
+By using an explicit stack, we can calculate the factorial without relying on recursive function calls. This approach avoids the stack overflow error and allows us to handle larger inputs efficiently.
+
+Conclusion
+Using a stack in recursion provides an alternative approach to mitigate the memory consumption issues associated with deep recursive function calls. By managing our own stack, we can simulate the behavior of the call stack and avoid stack overflow errors. This technique is particularly useful when dealing with large inputs or problems with deep recursion. By implementing the recursion iteratively using a stack, we gain control over the memory usage and can handle complex problems more efficiently.
