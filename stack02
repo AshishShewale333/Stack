@@ -1,0 +1,111 @@
+Implementing a Stack using Array
+A stack is a fundamental data structure that follows the Last-In-First-Out (LIFO) principle. It is widely used in various applications, including expression evaluation, function call management, and undo operations. In this article, we will explore the implementation of a stack using an array, which is one of the most straightforward and efficient ways to represent a stack.
+
+Array-Based Stack Implementation
+To implement a stack using an array, we need to define the necessary operations and maintain the top of the stack. Here are the essential components of an array-based stack implementation:
+
+Array: We use a fixed-size array to store the elements of the stack. The array provides random access to elements, allowing efficient insertion and retrieval.
+Top: The top variable represents the index of the topmost element in the stack. It keeps track of the last inserted element, enabling quick access and insertion.
+With these components in place, we can implement the following operations for the stack:
+
+1. Push: Inserting an element into the stack
+The push operation adds an element to the top of the stack. It involves two main steps:
+
+Check if the stack is full (i.e., the array is already at its maximum capacity).
+If the stack is not full, increment the top variable and insert the new element at the corresponding index in the array.
+2. Pop: Removing the top element from the stack
+The pop operation removes the top element from the stack. It involves the following steps:
+
+Check if the stack is empty (i.e., no elements are present).
+If the stack is not empty, retrieve the element at the top index, decrement the top variable, and return the removed element.
+
+
+class ArrayStack {
+    private int[] array;
+    private int top;
+    private int capacity;
+
+    public ArrayStack(int size) {
+        array = new int[size];
+        top = -1;
+        capacity = size;
+    }
+
+    public void push(int element) {
+        if (isFull()) {
+            System.out.println("Stack overflow!");
+            return;
+        }
+        array[++top] = element;
+    }
+
+    public int pop() {
+        if (isEmpty()) {
+            System.out.println("Stack underflow!");
+            return -1;
+        }
+        return array[top--];
+    }
+
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Stack is empty!");
+            return -1;
+        }
+        return array[top];
+    }
+
+    public boolean isEmpty() {
+        return top == -1;
+    }
+
+    private boolean isFull() {
+        return top == capacity - 1;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayStack stack = new ArrayStack(5);
+
+        // Push elements onto the stack
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        stack.push(5);
+
+        // Pop elements from the stack
+        System.out.println(stack.pop()); // Output: 5
+        System.out.println(stack.pop()); // Output: 4
+
+        // Peek the top element
+        System.out.println(stack.peek()); // Output: 3
+
+        // Check if the stack is empty
+        System.out.println(stack.isEmpty()); // Output: false
+
+        // Push more elements
+        stack.push(6);
+        stack.push(7);
+
+        // Pop elements until the stack is empty
+        while (!stack.isEmpty()) {
+            System.out.println(stack.pop());
+        }
+    }
+}
+
+
+
+In this implementation, we have covered the basic operations of push and pop, which allow us to insert elements onto the stack and remove elements from the top. These operations ensure that the stack follows the LIFO principle, where the last element inserted is the first one to be removed.
+
+It's important to note that the array-based stack has a fixed capacity determined during initialisation. This means that the stack can only hold a specific number of elements.
+
+If the stack is full and a push operation is attempted, it will result in a stack overflow error.
+
+Similarly, if the stack is empty and a pop operation is attempted, it will result in a stack underflow error.
+
+Understanding the implementation of a stack using an array is crucial for solving problems and designing algorithms that require the LIFO behavior. It provides a simple and efficient way to manage data and control the flow of operations.
+
+Remember to consider the capacity of the array when implementing an array-based stack. If dynamic resizing is required, you might want to consider using a dynamic array or another data structure that allows resizing.
