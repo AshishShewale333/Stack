@@ -1,0 +1,40 @@
+Introduction to Stack
+A stack is a fundamental data structure in computer science that follows the Last-In-First-Out (LIFO) principle. It is named after the real-life concept of a stack, such as a stack of plates or a stack of books. In a stack, elements are added and removed from the same end, known as the "top" of the stack.
+
+The stack data structure can be visualized as a vertical stack of elements, where the element at the top is the most recently added element, and the element at the bottom is the least recently added element. As new elements are added to the stack, they are pushed onto the top, and as elements are removed, they are popped off the top.
+
+Stacks have a wide range of applications in computer science and are used in various algorithms and data processing tasks. Some common use cases of stacks include expression evaluation, function call stack in programming languages, undo/redo functionality in text editors, browser history, and backtracking algorithms.
+
+LIFO Principle
+One of the fundamental characteristics of a stack is its adherence to the Last-In-First-Out (LIFO) principle. LIFO means that the last element added to the stack is the first one to be removed. In other words, the element that was pushed most recently is the one that will be popped first.
+
+To illustrate the LIFO principle, imagine a stack of books placed on top of each other. When you add a new book to the stack, it goes on top of the existing books. If you want to remove a book from the stack, you will remove the one on top first, revealing the book that was added before it. This behavior is similar to how a stack data structure operates.
+
+The LIFO principle has important implications for the behavior and usage of a stack. It means that elements are processed in the reverse order of their insertion. The most recently added element is always the next one to be accessed or removed. This property makes stacks suitable for many scenarios where the order of operations or data processing needs to be reversed or reversed-order access is required.
+
+For example, when processing function calls in a programming language, the most recently called function needs to finish executing first before the previous function can resume. The function call stack, implemented using a stack data structure, ensures that the last function called is the first one to complete, following the LIFO principle.
+
+Understanding the LIFO principle is crucial for effectively working with stacks and utilizing their capabilities. It helps in designing algorithms, implementing data structures, and solving problems that require the reversal or inverse order processing of elements.
+
+By following the LIFO principle, stacks provide a simple yet powerful way to manage data and control the flow of operations in various applications.
+
+Here is an animation to visualize the same https://youtu.be/toRJakeYIKA
+
+Purpose and Applications
+The stack data structure has many applications in various areas of computer science. It provides an efficient way to manage data by allowing quick access and manipulation of elements. Some common use cases of stacks include:
+
+Function Call Stack: In programming languages, stack frames are used to keep track of function calls. Each function call pushes a new frame onto the stack, and when a function returns, its frame is popped from the stack.
+Expression Evaluation: Stacks are used to evaluate arithmetic expressions, such as infix, postfix, and prefix notations. The stack helps in maintaining the order of operations and evaluating the expression step by step.
+Backtracking Algorithms: Stacks are used in backtracking algorithms to keep track of the choices made during the search process. When backtracking, the stack is used to undo the previous choices and explore alternative paths.
+Browser History: The back and forward navigation in web browsers is implemented using a stack. Each visited page is pushed onto the stack, and when the user clicks the back button, the topmost page is popped from the stack.
+Undo/Redo Operations: Stacks are used in applications that support undo and redo functionality. Each operation performed by the user is pushed onto the stack, allowing the user to undo or redo actions in a sequential manner.
+Basic Operations
+Stacks typically support the following basic operations:
+
+Push: Add an element to the top of the stack.
+Pop: Remove the element from the top of the stack.
+Peek/Top: Get the value of the element at the top of the stack without removing it.
+isEmpty: Check if the stack is empty.
+Size: Get the number of elements in the stack.
+Implementations
+Stacks can be implemented using various data structures, but the most common implementations are based on arrays or linked lists. Each implementation has its own advantages and considerations, and the choice depends on the specific requirements of the application.
