@@ -1,0 +1,62 @@
+Introduction to Queue: First-In-First-Out (FIFO)
+A queue is a linear data structure that follows the First-In-First-Out (FIFO) principle. It represents a collection of elements in which the element that enters the queue first is the first one to be removed. The concept of a queue can be easily understood by relating it to real-life examples and analogies.
+
+Analogies and Examples
+Queue at a Ticket Counter: Imagine you are waiting in line to buy tickets for a movie or an event. The person who joins the line first is the one who gets the ticket first. This scenario perfectly represents the FIFO behavior of a queue.
+Supermarket Checkout Line: When you visit a supermarket, you join a queue at the checkout counter. The cashier serves the customers in the order they arrived. The first person in line gets served first.
+Print Queue: In a shared printing environment, multiple users send print jobs to a printer. The printer maintains a queue to process these jobs. Each print job is handled in the order it was submitted, ensuring fairness and order.
+Call Center Queue: Call centers often have queues to handle incoming customer calls. The calls are placed in a queue and answered by customer service representatives based on their arrival. The first call received is the first one answered.
+Methods of a Queue
+A queue typically supports the following methods:
+
+Enqueue/Push: This operation adds an element to the rear (also known as the back) of the queue. The newly added element becomes the last element in the queue. It takes an element as input and inserts it at the end of the queue.
+Dequeue/Pop: This operation removes the element from the front of the queue. The element that has been in the queue the longest gets removed. It maintains the FIFO order of the queue. Dequeue operation takes no input and returns the element that is removed from the front.
+Peek/Front: This operation allows you to view the element at the front of the queue without removing it. It is helpful when you need to inspect the next element that will be dequeued. The peek operation takes no input and returns the element at the front of the queue.
+isEmpty: This method checks whether the queue is empty. If there are no elements in the queue, it returns true; otherwise, it returns false. It helps in determining if there are any elements in the queue or if it is empty.
+Size: This method returns the number of elements currently present in the queue. It gives you the size or length of the queue. By calling the size method, you can find out how many elements are there in the queue at any given time.
+These methods collectively provide the necessary functionality to manipulate a queue and perform operations based on the FIFO principle.
+
+Using Queue in Different Programming Languages:
+In this section, we will explore how to use a queue data structure in different programming languages, including C++, Java, JavaScript, and Python. We will focus on utilizing built-in libraries and frameworks to work with queues.
+
+1. C++ (using STL):
+In C++, you can use the Standard Template Library (STL) to work with queues. The "queue" container from the STL provides a simple and efficient implementation of a queue data structure.
+
+2. Java (using Collection Framework):
+In Java, you can utilize the Collection Framework, specifically the "java.util.Queue" interface and its implementing classes, such as "java.util.LinkedList" or "java.util.ArrayDeque".
+
+3. JavaScript:
+In JavaScript, you can implement a queue using arrays and built-in array methods.
+
+4. Python:
+In Python, you can use the "queue" module, which provides a Queue class that implements a queue data structure.
+
+
+import java.util.Queue;
+import java.util.LinkedList;
+
+public class Main {
+    public static void main(String[] args) {
+        Queue<Integer> queue = new LinkedList<>();
+
+        // Enqueue elements
+        queue.add(10);
+        queue.add(20);
+        queue.add(30);
+
+        // Dequeue an element
+        queue.remove();
+
+        // Access the front element
+        int frontElement = queue.peek();
+        System.out.println("frontElement : " + frontElement);
+
+        // Check if the queue is empty
+        boolean isEmpty = queue.isEmpty();
+        System.out.println("isEmpty : " + isEmpty);
+
+        // Get the size of the queue
+        int size = queue.size();
+        System.out.println("size : " + size);
+    }
+}
