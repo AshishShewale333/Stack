@@ -1,0 +1,73 @@
+First Unique Character in a stream of characters
+Easy
+Marks Available: 20.00
+Given a string A denoting a stream of lowercase alphabets. You have to make new string B.
+
+B is formed such that we have to find first non-repeating character each time a character is inserted to the stream and append it at the end to B. If no non-repeating character is found then append # at the end of B.
+
+Example 1:
+
+Input: A="aabc"
+Output:"a#bb"
+Explanation: "a" - first non-repeating character "a".
+"aa" - No non-repeating character hence "#".
+"aab" - first non-repeating character "b".
+"aabc" - first non-repeating character "b". 
+Hence final result will be "a#bb"
+Example 2:
+
+Input: A="abadbc"
+Output:"aabbdd"
+Constraints:
+
+1<= length of string <=100000
+
+
+
+✅ Java Code:
+java
+Copy
+Edit
+import java.util.*;
+
+public class Solution {
+    public String FirstNonRepeating(String A) {
+        int[] freq = new int[26];
+        Queue<Character> queue = new LinkedList<>();
+        StringBuilder result = new StringBuilder();
+
+        for (char c : A.toCharArray()) {
+            freq[c - 'a']++;
+            queue.offer(c);
+
+            while (!queue.isEmpty() && freq[queue.peek() - 'a'] > 1) {
+                queue.poll();
+            }
+
+            result.append(queue.isEmpty() ? '#' : queue.peek());
+        }
+
+        return result.toString();
+    }
+}
+🧪 Example
+java
+Copy
+Edit
+Input: A = "aabc"
+Output: "a#bb"
+Step-by-step:
+
+a → first unique: 'a'
+
+a → no unique: '#'
+
+b → first unique: 'b'
+
+c → first unique: 'b' (as 'b' is still unique)
+
+⏱ Time & Space Complexity
+Time: O(n), where n is the length of string A.
+
+Space: O(1), as frequency array is fixed size (26).
+
