@@ -1,0 +1,103 @@
+Queue using a LinkedList
+In the field of data structures and algorithms, a queue is a widely used abstract data type that follows the First-In-First-Out (FIFO) principle. It represents a collection of elements in which an element is inserted at one end (rear) and removed from the other end (front). One common implementation of a queue is using a LinkedList, which provides efficient operations for enqueueing and dequeueing elements.
+
+LinkedList-Based Queue
+A LinkedList is a data structure that consists of a sequence of nodes, where each node contains data and a reference (or link) to the next node in the sequence. A queue implemented using a LinkedList leverages the dynamic memory allocation and flexible structure of the LinkedList to efficiently handle enqueue and dequeue operations.
+
+Operations on a LinkedList-Based Queue
+The following operations are typically supported by a LinkedList-based queue:
+
+Enqueue/Push: This operation inserts an element at the rear (end) of the queue.
+Dequeue/Pop: This operation removes and returns the element from the front of the queue.
+IsEmpty: This operation checks whether the queue is empty or not.
+Size: This operation returns the number of elements in the queue.
+Front/Peek: This operation returns the element at the front of the queue without removing it.
+Example Code
+Let's now take a look at the example code for implementing a LinkedList-based queue in Java.
+
+import java.util.NoSuchElementException;
+
+class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class Queue {
+    private Node peek;
+    private Node rear;
+
+    public Queue() {
+        this.peek = null;
+        this.rear = null;
+    }
+
+    public boolean isEmpty() {
+        return peek == null;
+    }
+
+    public void push(int data) {
+        Node newNode = new Node(data);
+        if (isEmpty()) {
+            peek = newNode;
+            rear = newNode;
+        } else {
+            rear.next = newNode;
+            rear = newNode;
+        }
+    }
+
+    public int pop() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue is empty");
+        }
+        int data = peek.data;
+        peek = peek.next;
+        if (peek == null) {
+            rear = null;
+        }
+        return data;
+    }
+
+    public int peek() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue is empty");
+        }
+        return peek.data;
+    }
+
+    public int size() {
+        int count = 0;
+        Node current = peek;
+        while (current != null) {
+            count++;
+            current = current.next;
+        }
+        return count;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Queue queue = new Queue();
+        
+        queue.push(10);
+        queue.push(20);
+        queue.push(30);
+        queue.push(40);
+
+        System.out.println("Peek : " + queue.peek());
+        System.out.println("pop : " + queue.pop());
+        System.out.println("Size : " + queue.size());
+
+
+
+    }
+}
+
+
