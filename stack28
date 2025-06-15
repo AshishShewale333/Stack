@@ -1,0 +1,96 @@
+Previous Smaller Element
+Easy
+Marks Available: 20.00
+Given an array a of integers of length n, find the nearest smaller number for every element of an array such that the smaller element is on left side.If no small element present on the left print -1.
+
+Example 1:
+
+Input : a=[1,6,2]
+Output: [-1,1,1]
+Explanation: The nearest smaller element to the left side of 6,2 are 1,1 respectively. There is no any smaller element to the left side of 1 so -1 in answer.
+Example 2:
+
+Input: a=[1,5,0,3,4,5]
+Output: [-1,1,-1,0,3,4]
+Constriants:
+
+1<= size of array <= 100000
+0 <= arr[i] <= 10000
+
+
+
+✅ Java Code:
+java
+Copy
+Edit
+import java.util.*;
+
+class PreviousSmallerElement {
+    public int[] previousSmallerElements(int[] arr) {
+        int n = arr.length;
+        int[] result = new int[n];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < n; i++) {
+            // Remove elements from stack that are not smaller than arr[i]
+            while (!stack.isEmpty() && stack.peek() >= arr[i]) {
+                stack.pop();
+            }
+
+            // If stack is empty, there's no smaller element to the left
+            result[i] = stack.isEmpty() ? -1 : stack.peek();
+
+            // Push current element to stack for future comparisons
+            stack.push(arr[i]);
+        }
+
+        return result;
+    }
+
+    // Example usage
+    public static void main(String[] args) {
+        PreviousSmallerElement pse = new PreviousSmallerElement();
+
+        int[] input1 = {1, 6, 2};
+        System.out.println(Arrays.toString(pse.previousSmallerElements(input1))); // Output: [-1, 1, 1]
+
+        int[] input2 = {1, 5, 0, 3, 4, 5};
+        System.out.println(Arrays.toString(pse.previousSmallerElements(input2))); // Output: [-1, 1, -1, 0, 3, 4]
+    }
+}
+💡 How It Works:
+Iterate from left to right.
+
+Maintain a stack of previously seen elements in increasing order (top is the closest smaller element).
+
+For each element:
+
+Pop all elements that are greater than or equal to it.
+
+The top of the stack is its Previous Smaller Element, or -1 if the stack is empty.
+
+Push the current element to be available for the next iterations.
+
+🧠 Example:
+Input: a = [1, 5, 0, 3, 4, 5]
+
+Step-by-step:
+
+1 → -1 (no left)
+
+5 → 1 (1 < 5)
+
+0 → -1 (nothing smaller than 0 to the left)
+
+3 → 0
+
+4 → 3
+
+5 → 4
+
+Output: [-1, 1, -1, 0, 3, 4]
+
+⏱ Complexity:
+Time: O(n)
+
+Space: O(n) (stack + output array)
