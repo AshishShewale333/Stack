@@ -1,0 +1,99 @@
+Next Greater Element II
+Medium
+Marks Available: 20.00
+Given a circular integer array nums (i.e., the next element of nums[nums.length - 1] is nums[0]), return the next greater number for every element in nums.
+
+The next greater number of a number x is the first greater number to its traversing-order next in the array, which means you could search circularly to find its next greater number. If it doesn't exist, return -1 for this number.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,1]
+Output: [2,-1,2]
+Explanation: The first 1's next greater number is 2; 
+The number 2 can't find next greater number. 
+The second 1's next greater number needs to search circularly, which is also 2.
+Example 2:
+
+Input: nums = [1,2,3,4,3]
+Output: [2,3,4,-1,4]
+ 
+
+Constraints:
+
+1 <= nums.length <= 104
+-109 <= nums[i] <= 109
+
+✅ Java Code:
+java
+Copy
+Edit
+import java.util.*;
+
+class NextGreaterElementII {
+    public int[] nextGreaterElements(int[] nums) {
+        int n = nums.length;
+        int[] res = new int[n];
+        Arrays.fill(res, -1); // Default to -1 if no greater element is found
+        Stack<Integer> stack = new Stack<>();
+
+        // Traverse the array twice to simulate circular behavior
+        for (int i = 0; i < 2 * n; i++) {
+            int current = nums[i % n];
+
+            while (!stack.isEmpty() && nums[stack.peek()] < current) {
+                res[stack.pop()] = current;
+            }
+
+            if (i < n) {
+                stack.push(i);
+            }
+        }
+
+        return res;
+    }
+
+    // Sample usage
+    public static void main(String[] args) {
+        NextGreaterElementII nge2 = new NextGreaterElementII();
+
+        int[] result1 = nge2.nextGreaterElements(new int[]{1, 2, 1});
+        System.out.println(Arrays.toString(result1)); // Output: [2, -1, 2]
+
+        int[] result2 = nge2.nextGreaterElements(new int[]{1, 2, 3, 4, 3});
+        System.out.println(Arrays.toString(result2)); // Output: [2, 3, 4, -1, 4]
+    }
+}
+💡 Explanation:
+The key is to simulate a circular array by iterating from 0 to 2 * n - 1.
+
+Use i % n to access elements in a circular manner.
+
+Stack stores indices of elements. We only push indices in the first pass (i < n).
+
+If current element is greater than the element at the index on top of the stack, it's the next greater for that index.
+
+🧠 Example:
+Input: [1, 2, 1]
+
+First pass:
+
+1 → push
+
+2 > 1 → pop and assign res[0] = 2
+
+push 2
+
+Second pass:
+
+1 (again) < 2 → nothing to update
+
+Output: [2, -1, 2]
+
+⏱ Time & Space Complexity:
+Time: O(n)
+Every index is pushed and popped at most once.
+
+Space: O(n)
+For result array and the stack.
