@@ -1,0 +1,76 @@
+Queue using an Array
+A queue follows the First-In-First-Out (FIFO) principle, where elements are added to the rear end and removed from the front end.
+
+To implement a queue using an array, we need to keep track of two indices: front and rear. The front index points to the first element in the queue, while the rear index points to the last element. We will use these indices to enqueue and dequeue elements efficiently.
+
+class ArrayQueue {
+    private int maxSize;
+    private int front;
+    private int rear;
+    private int[] array;
+
+    public ArrayQueue(int capacity) {
+        maxSize = capacity;
+        front = 0;
+        rear = -1;
+        array = new int[maxSize];
+    }
+
+    public void push(int data) {
+        if (rear == maxSize - 1) {
+            System.out.println("Queue is full!");
+            return;
+        }
+        array[++rear] = data;
+    }
+
+    public int pop() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty!");
+            return -1;
+        }
+        int data = array[front++];
+        if (front > rear) { // Reset indices when the queue becomes empty
+            front = 0;
+            rear = -1;
+        }
+        return data;
+    }
+
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty!");
+            return -1;
+        }
+        return array[front];
+    }
+
+    public boolean isEmpty() {
+        return rear == -1;
+    }
+
+    public int size() {
+        if (isEmpty()) {
+            return 0;
+        }
+        return rear - front + 1;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayQueue queue = new ArrayQueue(20);
+        
+        queue.push(10);
+        queue.push(20);
+        queue.push(30);
+        queue.push(40);
+
+        System.out.println("Peek : " + queue.peek());
+        System.out.println("pop : " + queue.pop());
+        System.out.println("Size : " + queue.size());
+
+
+
+    }
+}
