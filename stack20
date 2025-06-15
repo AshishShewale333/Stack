@@ -1,0 +1,192 @@
+Ring Buffer
+Ring buffer (circular buffer, circular queue, cyclic buffer) is a data structure that uses a single, fixed-size buffer as if it were connected end-to-end. This structure lends itself easily to buffering data streams. There were early circular buffer implementations in hardware.. A ring buffer can be implemented using a linked list, which is a dynamic data structure that can grow or shrink as needed.
+
+Ring Buffer Implementation
+A Ring Buffer is typically implemented using an array or a circular linked list. In this article, we will focus on the array-based implementation. The underlying principle of a Ring Buffer is that the buffer wraps around to the beginning when it reaches the end, creating a circular structure.
+
+
+
+
+Ring Buffer using Array
+import java.util.NoSuchElementException;
+
+class RingBuffer {
+    private int[] buffer;
+    private int front;
+    private int rear;
+    private int size;
+    private int capacity;
+
+    public RingBuffer(int capacity) {
+        this.capacity = capacity;
+        this.buffer = new int[capacity];
+        this.front = 0;
+        this.rear = -1;
+        this.size = 0;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public boolean isFull() {
+        return size == capacity;
+    }
+
+    public void enqueue(int data) {
+        if (isFull()) {
+            throw new IllegalStateException("Buffer is full");
+        }
+        rear = (rear + 1) % capacity;
+        buffer[rear] = data;
+        size++;
+    }
+
+    public int dequeue() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Buffer is empty");
+        }
+        int data = buffer[front];
+        front = (front + 1) % capacity;
+        size--;
+        return data;
+    }
+
+    public int front() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Buffer is empty");
+        }
+        return buffer[front];
+    }
+
+    public int rear() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Buffer is empty");
+        }
+        return buffer[rear];
+    }
+
+    public int size() {
+        return size;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        RingBuffer buffer = new RingBuffer(5);
+
+        buffer.enqueue(1);
+        buffer.enqueue(2);
+        buffer.enqueue(3);
+
+        System.out.println("Front element: " + buffer.front()); // Output: 1
+        System.out.println("Rear element: " + buffer.rear()); // Output: 3
+
+        buffer.dequeue();
+        System.out.println("Front element after dequeue: " + buffer.front()); // Output: 2
+
+        System.out.println("Is buffer empty? " + buffer.isEmpty()); // Output: false
+        System.out.println("Buffer size: " + buffer.size()); // Output: 2
+    }
+}
+
+
+What is a ring buffer using a linked list?
+A ring buffer using a linked list is a data structure that allows for fast, circular access to a fixed-size buffer of data. The data is stored in a linked list, where each node represents an element in the buffer. The linked list is circular, meaning that the last node is connected to the first node, creating a ring-like structure. This allows for fast access to the data, as we can easily move forward or backward in the buffer by following the links between the nodes.
+
+How to implement a ring buffer using a linked list?
+
+To implement a ring buffer using a linked list, we need to perform the following steps:
+
+Define a struct for the linked list node that contains a value and a pointer to the next node.
+Define a struct for the ring buffer that contains a pointer to the head node, a pointer to the tail node, and the size of the buffer.
+Initialize the head and tail pointers to null.
+To insert a new element in the buffer: a. Create a new node and set its value to the new element. b. If the buffer is empty, set both the head and tail pointers to the new node. c. Otherwise, set the next pointer of the current tail node to the new node, and set the tail pointer to the new node. d. If the size of the buffer exceeds the maximum size, remove the head node and set the head pointer to the next node.
+To access an element in the buffer, simply follow the links between the nodes.
+Here's the implementation of a Ring Buffer (Circular Buffer) using a LinkedList in java
+
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
+
+class RingBuffer {
+    private LinkedList<Integer> buffer;
+    private int capacity;
+
+    public RingBuffer(int capacity) {
+        this.capacity = capacity;
+        this.buffer = new LinkedList<>();
+    }
+
+    public boolean isEmpty() {
+        return buffer.isEmpty();
+    }
+
+    public boolean isFull() {
+        return buffer.size() == capacity;
+    }
+
+    public void enqueue(int data) {
+        if (isFull()) {
+            throw new IllegalStateException("Buffer is full");
+        }
+        buffer.addLast(data);
+    }
+
+    public int dequeue() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Buffer is empty");
+        }
+        return buffer.removeFirst();
+    }
+
+    public int front() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Buffer is empty");
+        }
+        return buffer.getFirst();
+    }
+
+    public int rear() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Buffer is empty");
+        }
+        return buffer.getLast();
+    }
+
+    public int size() {
+        return buffer.size();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        RingBuffer buffer = new RingBuffer(5);
+
+        buffer.enqueue(1);
+        buffer.enqueue(2);
+        buffer.enqueue(3);
+
+        System.out.println("Front element: " + buffer.front()); // Output: 1
+        System.out.println("Rear element: " + buffer.rear()); // Output: 3
+
+        buffer.dequeue();
+        System.out.println("Front element after dequeue: " + buffer.front()); // Output: 2
+
+        System.out.println("Is buffer empty? " + buffer.isEmpty()); // Output: false
+        System.out.println("Buffer size: " + buffer.size()); // Output: 2
+    }
+}
+
+
+Identifying problems that use a ring buffer
+Problems that can be solved using a ring buffer typically have the following properties:
+
+The problem involves a fixed-size buffer of data.
+The problem requires circular access to the buffer, where the last element is connected to the first element.
+The problem requires constant-time access to the elements in the buffer.
+Examples of problems that can be solved using a ring buffer include:
+
+Implementing a buffer for audio or video streaming.
+Implementing a buffer for network packet transmission.
+Implementing a buffer for data logging.
+
