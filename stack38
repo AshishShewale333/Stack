@@ -1,0 +1,54 @@
+Deque in Programming Languages
+A Deque, short for "Double-Ended Queue," is an abstract data type that allows insertion and deletion of elements from both ends. It combines the features of a stack and a queue, offering flexibility in manipulating elements at the front and rear positions. Deques can be implemented using various programming languages and their standard libraries, such as the Collections Framework in Java, the Standard Template Library (STL) in C++, and built-in data structures in Python and JavaScript. In this article, we will explore the concept of a Deque, discuss its operations, and provide example code in Java (using the Collections Framework), C++ (using the STL), Python, and JavaScript.
+
+Deque Operations
+The following operations are commonly supported by a Deque:
+
+InsertFront: This operation inserts an element at the front of the deque.
+InsertRear: This operation inserts an element at the rear of the deque.
+DeleteFront: This operation removes and returns the element from the front of the deque.
+DeleteRear: This operation removes and returns the element from the rear of the deque.
+IsEmpty: This operation checks whether the deque is empty or not.
+GetFront: This operation returns the element at the front of the deque without removing it.
+GetRear: This operation returns the element at the rear of the deque without removing it.
+Size: This operation returns the number of elements in the deque.
+Deque Implementations in Programming Languages
+Let's now explore the implementation of a Deque in Java (using the Collections Framework)
+
+import java.util.Deque;
+import java.util.LinkedList;
+
+public class Main {
+    public static void main(String[] args) {
+        Deque<Integer> deque = new LinkedList<>();
+
+        // Insert elements at the front
+        deque.offerFirst(1);
+        deque.offerFirst(2);
+        deque.offerFirst(3);
+
+        // Insert elements at the rear
+        deque.offerLast(4);
+        deque.offerLast(5);
+
+        // Display the elements
+        System.out.println("Deque: " + deque);
+
+        // Delete elements from the front and rear
+        deque.pollFirst();
+        deque.pollLast();
+
+        // Display the elements after deletion
+        System.out.println("Deque after deletion: " + deque);
+
+        // Get the front and rear elements
+        System.out.println("Front element: " + deque.peekFirst());
+        System.out.println("Rear element: " + deque.peekLast());
+
+        // Get the size of the deque
+        System.out.println("Size of deque: " + deque.size());
+
+        // Check if the deque is empty
+        System.out.println("Is deque empty? " + deque.isEmpty());
+    }
+}
