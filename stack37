@@ -1,0 +1,159 @@
+Doubly Ended Queue (Deque)
+Doubly Ended Queue, commonly known as a Deque, is an abstract data type that allows insertion and deletion of elements from both ends. It combines the features of a queue and a stack, providing flexibility in manipulating elements from the front and rear positions.
+
+Implementation
+A Doubly Ended Queue is typically implemented using a doubly linked list, where each node contains a data element, a reference to the next node, and a reference to the previous node. This structure allows efficient insertion and deletion operations from both ends of the deque.
+
+Operations on a Doubly Ended Queue
+The following operations are commonly supported by a Doubly Ended Queue:
+
+InsertFront: This operation inserts an element at the front of the deque.
+InsertRear: This operation inserts an element at the rear of the deque.
+DeleteFront: This operation removes and returns the element from the front of the deque.
+DeleteRear: This operation removes and returns the element from the rear of the deque.
+IsEmpty: This operation checks whether the deque is empty or not.
+GetFront: This operation returns the element at the front of the deque without removing it.
+GetRear: This operation returns the element at the rear of the deque without removing it.
+Size: This operation returns the number of elements in the deque.
+Example Code
+Let's now take a look at the example code for implementing a Doubly Ended Queue (Deque) in Java.
+
+import java.util.NoSuchElementException;
+
+class Node {
+    int data;
+    Node prev;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.prev = null;
+        this.next = null;
+    }
+}
+
+class Deque {
+    private Node front;
+    private Node rear;
+    private int size;
+
+    public Deque() {
+        this.front = null;
+        this.rear = null;
+        this.size = 0;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public void insertFront(int data) {
+        Node newNode = new Node(data);
+        if (isEmpty()) {
+            front = newNode;
+            rear = newNode;
+        } else {
+            newNode.next = front;
+            front.prev = newNode;
+            front = newNode;
+        }
+        size++;
+    }
+
+    public void insertRear(int data) {
+        Node newNode = new Node(data);
+        if (isEmpty()) {
+            front = newNode;
+            rear = newNode;
+        } else {
+            newNode.prev = rear;
+            rear.next = newNode;
+            rear = newNode;
+        }
+        size++;
+    }
+
+    public int deleteFront() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Deque is empty");
+        }
+        int data = front.data;
+        if (front == rear) {
+            front = null;
+            rear = null;
+        } else {
+            front = front.next;
+            front.prev = null;
+        }
+        size--;
+        return data;
+    }
+
+    public int deleteRear() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Deque is empty");
+        }
+        int data = rear.data;
+        if (front == rear) {
+            front = null;
+            rear = null;
+        } else {
+            rear = rear.prev;
+            rear.next = null;
+        }
+        size--;
+        return data;
+    }
+
+    public int getFront() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Deque is empty");
+        }
+        return front.data;
+    }
+
+    public int getRear() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Deque is empty");
+        }
+        return rear.data;
+    }
+
+    public int size() {
+        return size;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Deque deque = new Deque();
+
+        // Insert elements at the front
+        deque.insertFront(10);
+        deque.insertFront(20);
+        deque.insertFront(30);
+
+        // Insert elements at the rear
+        deque.insertRear(40);
+        deque.insertRear(50);
+        deque.insertRear(60);
+
+        // Delete elements from the front
+        System.out.println("Deleted element from front: " + deque.deleteFront());
+        System.out.println("Deleted element from front: " + deque.deleteFront());
+
+        // Delete elements from the rear
+        System.out.println("Deleted element from rear: " + deque.deleteRear());
+        System.out.println("Deleted element from rear: " + deque.deleteRear());
+
+        // Get the front and rear elements
+        System.out.println("Front element: " + deque.getFront());
+        System.out.println("Rear element: " + deque.getRear());
+
+        // Check if the deque is empty
+        System.out.println("Is the deque empty? " + deque.isEmpty());
+
+        // Get the size of the deque
+        System.out.println("Size of the deque: " + deque.size());
+    }
+}
