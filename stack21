@@ -1,0 +1,85 @@
+Implement Stack Using Queue
+Introduction
+In the realm of data structures and algorithms, a stack is an abstract data type that follows the Last-In-First-Out (LIFO) principle. It represents a collection of elements in which an element is inserted and removed from the same end called the top of the stack. However, when using a queue, which follows the First-In-First-Out (FIFO) principle, it is possible to implement a stack by using two queues. In this article, we will explore the concept of implementing a stack using queues, discuss its underlying principles, operations, and provide example code in Java, C++, Python, and JavaScript.
+
+Stack Implementation Using Queues
+The basic idea of implementing a stack using queues is to simulate the LIFO behavior of a stack using the FIFO behavior of a queue. This can be achieved by using two queues and manipulating the elements during the push and pop operations.
+
+Operations on a Stack
+The following operations are commonly supported by a stack:
+
+Push: This operation inserts an element onto the top of the stack.
+Pop: This operation removes and returns the element from the top of the stack.
+IsEmpty: This operation checks whether the stack is empty or not.
+Top: This operation returns the element at the top of the stack without removing it.
+Size: This operation returns the number of elements in the stack.
+Example Code
+Let's now explore the example code for implementing a stack using queues in Java
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+class StackUsingQueue {
+    private Queue<Integer> queue1;
+    private Queue<Integer> queue2;
+    private int top;
+
+    public StackUsingQueue() {
+        queue1 = new LinkedList<>();
+        queue2 = new LinkedList<>();
+    }
+
+    public void push(int data) {
+        queue1.add(data);
+        top = data;
+    }
+
+    public int pop() {
+        if (isEmpty()) {
+            throw new RuntimeException("Stack is empty");
+        }
+        while (queue1.size() > 1) {
+            top = queue1.remove();
+            queue2.add(top);
+        }
+        int data = queue1.remove();
+        Queue<Integer> temp = queue1;
+        queue1 = queue2;
+        queue2 = temp;
+        return data;
+    }
+
+    public int top() {
+        if (isEmpty()) {
+            throw new RuntimeException("Stack is empty");
+        }
+        return top;
+    }
+
+    public boolean isEmpty() {
+        return queue1.isEmpty();
+    }
+
+    public int size() {
+        return queue1.size();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        StackUsingQueue stack = new StackUsingQueue();
+
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+
+        System.out.println("Top element: " + stack.top()); // Output: 3
+
+        stack.pop();
+        System.out.println("Top element after pop: " + stack.top()); // Output: 2
+
+        System.out.println("Is stack empty? " + stack.isEmpty()); // Output: false
+        System.out.println("Stack size: " + stack.size()); // Output: 2
+    }
+}
+
