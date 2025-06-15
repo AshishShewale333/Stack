@@ -1,0 +1,78 @@
+Implement Queue Using Stack
+Queue is an abstract data type that follows the First-In-First-Out (FIFO) principle. It represents a collection of elements where the first element inserted is the first one to be removed. On the other hand, a stack follows the Last-In-First-Out (LIFO) principle. Surprisingly, it is possible to implement a queue using a stack.
+
+The core idea behind implementing a queue using a stack is to simulate the FIFO behavior of a queue by utilizing the LIFO behavior of a stack. To achieve this, we can use two stacks and manipulate the elements during the enqueue and dequeue operations.
+
+Operations on a Queue
+The following operations are commonly supported by a queue:
+
+Enqueue: This operation inserts an element at the rear of the queue.
+Dequeue: This operation removes and returns the element from the front of the queue.
+IsEmpty: This operation checks whether the queue is empty or not.
+Front: This operation returns the element at the front of the queue without removing it.
+Size: This operation returns the number of elements in the queue.
+Example Code
+
+
+import java.util.Stack;
+
+class QueueUsingStack {
+    private Stack<Integer> stack1;
+    private Stack<Integer> stack2;
+
+    public QueueUsingStack() {
+        stack1 = new Stack<>();
+        stack2 = new Stack<>();
+    }
+
+    public void enqueue(int data) {
+        while (!stack1.isEmpty()) {
+            stack2.push(stack1.pop());
+        }
+        stack1.push(data);
+        while (!stack2.isEmpty()) {
+            stack1.push(stack2.pop());
+        }
+    }
+
+    public int dequeue() {
+        if (isEmpty()) {
+            throw new RuntimeException("Queue is empty");
+        }
+        return stack1.pop();
+    }
+
+    public int front() {
+        if (isEmpty()) {
+            throw new RuntimeException("Queue is empty");
+        }
+        return stack1.peek();
+    }
+
+    public boolean isEmpty() {
+        return stack1.isEmpty();
+    }
+
+    public int size() {
+        return stack1.size();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        QueueUsingStack queue = new QueueUsingStack();
+
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+
+        System.out.println("Front element: " + queue.front()); // Output: 1
+
+        queue.dequeue();
+        System.out.println("Front element after dequeue: " + queue.front()); // Output: 2
+
+        System.out.println("Is queue empty? " + queue.isEmpty()); // Output: false
+        System.out.println("Queue size: " + queue.size()); // Output: 2
+    }
+}
+
