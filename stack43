@@ -1,0 +1,95 @@
+Design Hit Counter
+Medium
+Marks Available: 20.00
+Design a hit counter which counts the number of hits received in the past 5 minutes (i.e., the past 300 seconds).
+
+Your system should accept a timestamp parameter (in seconds granularity), and you may assume that calls are being made to the system in chronological order (i.e., timestamp is monotonically increasing). Several hits may arrive roughly at the same time.
+
+Implement the HitCounter class:
+
+HitCounter() Initializes the object of the hit counter system.
+void hit(int timestamp) Records a hit that happened at timestamp (in seconds). Several hits may happen at the same timestamp.
+int getHits(int timestamp) Returns the number of hits in the past 5 minutes from timestamp (i.e., the past 300 seconds).
+Example 1:
+
+Input: 
+ ["HitCounter", "hit", "hit", "hit", "getHits", "hit", "getHits", "getHits"]
+ [[], [1], [2], [3], [4], [300], [300], [301]]Output: [null, null, null, null, 3, null, 4, 3]
+Explanation: HitCounter hitCounter = new HitCounter();
+
+hitCounter.hit(1);       // hit at timestamp 1.
+
+hitCounter.hit(2);       // hit at timestamp 2.
+
+hitCounter.hit(3);       // hit at timestamp 3.
+
+hitCounter.getHits(4);   // get hits at timestamp 4, return 3.
+
+hitCounter.hit(300);     // hit at timestamp 300.
+
+hitCounter.getHits(300); // get hits at timestamp 300, return 4.
+
+hitCounter.getHits(301); // get hits at timestamp 301, return 3.
+Constraints:
+
+1 <= timestamp <= 
+2
+∗
+10
+9
+2∗10 
+9
+ 
+All the calls are being made to the system in chronological order (i.e., timestamp is monotonically increasing).
+At most 300 calls will be made to hit and getHits.
+
+
+
+✅ Java Code (Using Queue):
+java
+Copy
+Edit
+import java.util.*;
+
+class HitCounter {
+    private Queue<int[]> queue;
+    private int totalHits;
+
+    public HitCounter() {
+        queue = new LinkedList<>();
+        totalHits = 0;
+    }
+
+    public void hit(int timestamp) {
+        if (!queue.isEmpty() && queue.peek()[0] == timestamp) {
+            queue.peek()[1] += 1;
+        } else {
+            queue.offer(new int[]{timestamp, 1});
+        }
+        totalHits++;
+    }
+
+    public int getHits(int timestamp) {
+        while (!queue.isEmpty() && timestamp - queue.peek()[0] >= 300) {
+            totalHits -= queue.poll()[1];
+        }
+        return totalHits;
+    }
+}
+🧪 Example:
+java
+Copy
+Edit
+HitCounter hitCounter = new HitCounter();
+
+hitCounter.hit(1);       // +1 hit
+hitCounter.hit(2);       // +1 hit
+hitCounter.hit(3);       // +1 hit
+hitCounter.getHits(4);   // returns 3
+hitCounter.hit(300);     // +1 hit
+hitCounter.getHits(300); // returns 4
+hitCounter.getHits(301); // returns 3 (hit at timestamp 1 is expired)
+⏱ Time and Space Complexity:
+Time Complexity: O(1) per operation on average, but may take O(n) in worst case during getHits when many old timestamps are removed.
+
+Space Complexity: O(n), where n is the number of hits in the last 5 minutes.
