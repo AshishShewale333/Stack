@@ -1,0 +1,118 @@
+Circular Queue
+Circular queue is an abstract data type that follows the First-In-First-Out (FIFO) principle. It represents a collection of elements in which an element is inserted at the rear and removed from the front. Unlike a linear queue, a circular queue allows efficient utilization of memory by reusing empty spaces.
+
+Implementation
+A circular queue is typically implemented using an array or a linked list. In this article, we will focus on the array-based implementation. The underlying principle of a circular queue is that the front and rear pointers "wrap around" to the beginning of the array when they reach the end.
+
+Operations on a Circular Queue
+The following operations are commonly supported by a circular queue:
+
+Enqueue/Push: This operation inserts an element at the rear of the queue.
+Dequeue/Pop: This operation removes and returns the element from the front of the queue.
+IsEmpty: This operation checks whether the queue is empty or not.
+IsFull: This operation checks whether the queue is full or not.
+Front/Peek: This operation returns the element at the front of the queue without removing it.
+Rear: This operation returns the element at the rear of the queue without removing it.
+Example Code
+Let's explore the example code for implementing a circular queue in Java
+
+import java.util.NoSuchElementException;
+
+class CircularQueue {
+    private int[] queue;
+    private int front;
+    private int rear;
+    private int size;
+    private int capacity;
+
+    public CircularQueue(int capacity) {
+        this.capacity = capacity;
+        this.queue = new int[capacity];
+        this.front = -1;
+        this.rear = -1;
+        this.size = 0;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public boolean isFull() {
+        return size == capacity;
+    }
+
+    public void enqueue(int data) {
+        if (isFull()) {
+            throw new IllegalStateException("Queue is full");
+        }
+        if (isEmpty()) {
+            front = 0;
+        }
+        rear = (rear + 1) % capacity;
+        queue[rear] = data;
+        size++;
+    }
+
+    public int dequeue() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue is empty");
+        }
+        int data = queue[front];
+        if (front == rear) {
+            front = -1;
+            rear = -1;
+        } else {
+            front = (front + 1) % capacity;
+        }
+        size--;
+        return data;
+    }
+
+    public int front() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue is empty");
+        }
+        return queue[front];
+    }
+
+    public int rear() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue is empty");
+        }
+        return queue[rear];
+    }
+
+    public int size() {
+        return size;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        CircularQueue queue = new CircularQueue(5);
+
+        // Enqueue elements
+        queue.enqueue(10);
+        queue.enqueue(20);
+        queue.enqueue(30);
+        queue.enqueue(40);
+        queue.enqueue(50);
+
+        // Dequeue elements
+        System.out.println("Dequeued element: " + queue.dequeue());
+        System.out.println("Dequeued element: " + queue.dequeue());
+
+        // Front and Rear elements
+        System.out.println("Front element: " + queue.front());
+        System.out.println("Rear element: " + queue.rear());
+
+        // Check if the queue is empty
+        System.out.println("Is the queue empty? " + queue.isEmpty());
+
+        // Check if the queue is full
+        System.out.println("Is the queue full? " + queue.isFull());
+
+        // Get the size of the queue
+        System.out.println("Size of the queue: " + queue.size());
+    }
+}
